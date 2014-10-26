@@ -30,7 +30,7 @@ def login_required(test):
     @wraps(test)
     def wrap(*args, **kwargs):
         if 'logged_in' in session:
-            return test(*args, **kwargs)
+            return test(*agrs, **kwargs)
         else:
             flash('You need to login first.')
             return redirect(url_for('login'))
@@ -44,7 +44,7 @@ def login():
                 request.form['password'] != app.config['PASSWORD']:
                     error = 'Ivalid Credentials. Please try again.'
         else:
-            session['logged_in'] = True
+            session['login_in'] = True
             return redirect(url_for('main'))
     return render_template('login.html', error=error)
 
@@ -57,10 +57,7 @@ def logout():
 @app.route('/main')
 @login_required
 def main():
-    g.db = connect_db()
-    cur = g.db.execute('select * from posts')
-    posts = [dict(title=row[0], post=row[1]) for row in cur.fetchall()]
-    return render_template('main.html', posts=posts)
+    return render_template('main.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
