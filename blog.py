@@ -10,7 +10,7 @@
 
 """
 import sqlite3
-from flask import Flask, render_template, request, session, flash, redirect \
+from flask import Flask, render_template, request, session, flash, redirect, \
         url_for, g
 
 DATABASE = 'blog.db'
